@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.0.24">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <GVL Name="GVL" Id="{f00152a8-acd5-4774-ab04-fd1a272ff823}">
     <Declaration><![CDATA[VAR_GLOBAL
+	
 	//Sample21
 	REAL32_1 AT %MB0 : REAL;  (* 1 *)
         REAL32_2 AT %MB4 : REAL;  (* 2 *)
@@ -64,7 +65,14 @@
         ARRAY_5 : ARRAY[1 .. 10] OF BOOL; (* 50 *)
 
         STRING_1 : STRING(20);
+		
+	//Sample80
+	i: INT;
+	iThis : INT;
+	iThat : INT;
+	
+	bThis: BOOL;
+	bThat: BOOL;
 END_VAR]]></Declaration>
-    <ObjectProperties />
   </GVL>
 </TcPlcObject>

@@ -40,7 +40,7 @@ namespace S80_Reactive
 
                 // Turning ADS Notifications into sequences of Value Objects (Taking 20 Values)
                 // and subscribe to them.
-                IDisposable subscription = client.WhenNotification<ushort>("TwinCAT_SystemInfoVarList._TaskInfo.CycleCount", NotificationSettings.Default).Take(20).Subscribe(valueObserver);
+                IDisposable subscription = client.WhenNotification<ushort>("TwinCAT_SystemInfoVarList._TaskInfo[1].CycleCount", NotificationSettings.Default).Take(20).Subscribe(valueObserver);
 
                 Console.ReadKey(); // Wait for Key press
                 subscription.Dispose(); // Dispose the Subscription
@@ -59,11 +59,11 @@ namespace S80_Reactive
                 object[] tags = new object[instancesCount];
 
 
-                instancePaths[0] = "TwinCAT_SystemInfoVarList._TaskInfo.CycleCount";
+                instancePaths[0] = "TwinCAT_SystemInfoVarList._TaskInfo[1].CycleCount";
                 instanceTypes[0] = typeof(ushort);
                 tags[0] = instancePaths[0];
 
-                instancePaths[1] = "TwinCAT_SystemInfoVarList._TaskInfo.LastExecTime";
+                instancePaths[1] = "TwinCAT_SystemInfoVarList._TaskInfo[1].LastExecTime";
                 instanceTypes[1] = typeof(uint);
                 tags[1] = instancePaths[1];
 
@@ -91,7 +91,7 @@ namespace S80_Reactive
 
                 // Create Symbol information
                 var symbolLoader = SymbolLoaderFactory.Create(client, SymbolLoaderSettings.Default);
-                IValueSymbol cycleCount = (IValueSymbol)symbolLoader.Symbols["TwinCAT_SystemInfoVarList._TaskInfo.CycleCount"];
+                IValueSymbol cycleCount = (IValueSymbol)symbolLoader.Symbols["TwinCAT_SystemInfoVarList._TaskInfo[1].CycleCount"];
 
                 // Reactive Notification Handler
                 var valueObserver = Observer.Create<object>(val =>
@@ -210,7 +210,7 @@ namespace S80_Reactive
                 SymbolCollection notificationSymbols = new SymbolCollection();
                 IArrayInstance taskInfo = (IArrayInstance)symbolLoader.Symbols["TwinCAT_SystemInfoVarList._TaskInfo"];
                 
-                foreach(ISymbol element in taskInfo.Elements)
+                foreach(ISymbol element in TaskInfo[1].Elements)
                 {
                     ISymbol cycleCount = element.SubSymbols["CycleCount"];
                     ISymbol lastExecTime = element.SubSymbols["LastExecTime"];
@@ -291,8 +291,8 @@ namespace S80_Reactive
 
                 // Create Symbol information
                 var symbolLoader = SymbolLoaderFactory.Create(client, SymbolLoaderSettings.Default);
-                IValueSymbol cycleCount = (IValueSymbol)symbolLoader.Symbols["TwinCAT_SystemInfoVarList._TaskInfo.CycleCount"]; // UShort Type
-                IValueSymbol lastExecTime = (IValueSymbol)symbolLoader.Symbols["TwinCAT_SystemInfoVarList._TaskInfo.LastExecTime"]; // UInt Type
+                IValueSymbol cycleCount = (IValueSymbol)symbolLoader.Symbols["TwinCAT_SystemInfoVarList._TaskInfo[1].CycleCount"]; // UShort Type
+                IValueSymbol lastExecTime = (IValueSymbol)symbolLoader.Symbols["TwinCAT_SystemInfoVarList._TaskInfo[1].LastExecTime"]; // UInt Type
 
                 SymbolCollection symbols = new SymbolCollection();
                 symbols.Add(cycleCount);
@@ -368,7 +368,7 @@ namespace S80_Reactive
             using (AdsClient client = new AdsClient())
             {
                 // Connect to target
-                client.Connect(new AmsAddress("172.17.62.105.1.1", 851));
+                client.Connect(new AmsAddress(AmsNetId.Local, 851));
 
                 // Create Symbol information
                 var symbolLoader = SymbolLoaderFactory.Create(client, SymbolLoaderSettings.DefaultDynamic);
