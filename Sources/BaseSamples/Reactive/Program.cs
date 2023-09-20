@@ -210,7 +210,7 @@ namespace S80_Reactive
                 SymbolCollection notificationSymbols = new SymbolCollection();
                 IArrayInstance taskInfo = (IArrayInstance)symbolLoader.Symbols["TwinCAT_SystemInfoVarList._TaskInfo"];
                 
-                foreach(ISymbol element in taskInfo.Elements)
+                foreach(ISymbol element in TaskInfo[1].Elements)
                 {
                     ISymbol cycleCount = element.SubSymbols["CycleCount"];
                     ISymbol lastExecTime = element.SubSymbols["LastExecTime"];
